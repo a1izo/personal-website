@@ -1,20 +1,4 @@
-/* ==========================================================================
-   MOBILE.CSS
-   Dedicated responsive layer for alex2dev.
-   Load this AFTER styles.css — it only adds/overrides rules for narrower
-   viewports, it doesn't touch the desktop layout at all.
 
-   Breakpoints:
-     1024px  – tablets / small laptops (light layout easing)
-     900px   – the real "mobile" switch: sidebar becomes a drawer
-     640px   – phones
-     380px   – small phones
-   ========================================================================== */
-
-/* --------------------------------------------------------------------
-   0. Mobile top bar + hamburger + overlay
-   These exist in the DOM at all sizes but are display:none until 900px.
-   -------------------------------------------------------------------- */
 .mobile-topbar{
   display:none;
   position:fixed; inset:0 0 auto 0; z-index:998;
@@ -52,9 +36,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
 }
 .mobile-nav-overlay[hidden]{ display:none; }
 
-/* --------------------------------------------------------------------
-   1. Tablet easing (≤1024px) — nothing drastic, just breathing room
-   -------------------------------------------------------------------- */
 @media (max-width: 1024px){
   :root{ --sidebar-w: 220px; }
   .stage{ padding:22px; gap:22px; }
@@ -63,10 +44,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .tech-stack{ grid-template-columns:1fr; }
 }
 
-/* --------------------------------------------------------------------
-   2. The real mobile switch (≤900px)
-   Sidebar leaves the grid and becomes a slide-in drawer.
-   -------------------------------------------------------------------- */
 @media (max-width: 900px){
 
   .boot-loader{ display:none; }
@@ -78,7 +55,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .mobile-nav-overlay{ display:none; }
   body.nav-open .mobile-nav-overlay{ display:block; }
 
-  /* Sidebar becomes an off-canvas drawer */
   .sidebar{
     position:fixed; top:0; left:0; bottom:0; z-index:1100;
     width:min(300px, 84vw); height:100vh; height:100dvh;
@@ -92,13 +68,17 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
 
   .side-nav a{ padding:12px 12px; font-size:14.5px; }
 
-  /* Push page content below the fixed mobile top bar */
   .stage{ padding:78px 16px 40px; gap:18px; }
 
-  /* ---- Hero ---- */
   .monitor-body{ padding:32px 20px 26px; }
-  .hero-grid{ grid-template-columns:1fr; gap:28px; text-align:left; }
-  .hero-photo{ order:-1; max-width:190px; margin:0 auto; }
+  .hero-grid{
+    display:flex; flex-direction:column; gap:24px; text-align:left;
+  }
+  .hero-photo{
+    order:-1; width:170px; max-width:60%; margin:0 auto;
+    flex-shrink:0;
+  }
+  .photo-frame{ width:100%; aspect-ratio:3/4; }
   .rec-line{ margin-bottom:18px; }
   h1.name{ font-size:clamp(38px, 12vw, 58px); }
   .hero-role{ font-size:14.5px; max-width:100%; }
@@ -106,19 +86,16 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .hero-cta .btn{ width:100%; padding:14px 18px; }
   .hero-social{ justify-content:flex-start; }
 
-  /* ---- Panels, generally ---- */
   .panel-body{ padding:24px 18px; }
   .panel-title{ margin-bottom:18px; }
   .panel-title h2{ font-size:24px; }
   .window-chrome{ padding:10px 14px; }
   .window-chrome .filename{ font-size:10px; }
 
-  /* ---- About ---- */
   .about-body{ font-size:14.5px; }
   .lang-strip{ gap:8px; }
   .chip{ font-size:11px; padding:6px 10px; }
 
-  /* ---- Education / Certifications tables → stacked cards ---- */
   .queue-row.head{ display:none; }
   .queue-row{
     grid-template-columns:1fr; gap:6px;
@@ -133,7 +110,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .job .org{ display:block; font-size:12.5px; color:var(--dim); margin-top:2px; }
   .loc, .status{ font-size:13px; color:var(--dim); }
 
-  /* ---- Experience timeline: keep horizontal scrub, but tidy labels ---- */
   .timeline-wrap{ margin:0 -18px; padding:0 18px 8px; }
   .track-label{ display:none; }
   .track-row{ height:70px; }
@@ -142,52 +118,53 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .track-legend{ margin-left:0; margin-top:16px; }
   .legend-row{ font-size:12.5px; }
 
-  /* ---- Journey ---- */
   .journey-list{ gap:14px; }
   .journey-item{ gap:12px; }
   .journey-card{ padding:14px 16px; }
   .journey-card h3{ font-size:16px; }
   .journey-card p{ font-size:13px; }
 
-  /* ---- Projects bin: full-bleed snap cards ---- */
   .bin-hint{ margin-bottom:12px; }
-  .bin-row{ margin:0 -18px; padding:0 18px 12px; gap:12px; }
-  .card{ flex-basis:84vw; padding:18px; }
+  .bin-row{ margin:0; padding:4px 4px 14px 0; gap:14px; scroll-padding-left:0; }
+  .card{ flex-basis:82vw; padding:18px; }
   .card h3{ font-size:19px; }
   .card p{ font-size:13px; }
 
-  /* ---- Video editing ---- */
   .create-intro p{ font-size:13.5px; }
   .video-caption{ flex-wrap:wrap; gap:6px; font-size:11px; }
   .tools-row{ flex-wrap:wrap; gap:8px; }
-
-  /* ---- Skill mixer ---- */
   .mixer-groups{ grid-template-columns:1fr; gap:22px; }
   .mixer{ gap:10px; }
   .channel{ flex:1 1 60px; }
   .tech-stack{ grid-template-columns:1fr; gap:12px; margin-top:22px; }
   .tech-column{ padding:16px; }
 
-  /* ---- Contact / export dialog ---- */
   .export-field{
-    display:flex; flex-direction:column; align-items:flex-start; gap:4px;
-    padding:10px 0;
+    display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+    padding:10px 0; text-align:left;
   }
-  .export-field .v{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+  .export-field .v{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-start;
+    gap:8px; width:100%; margin:0; text-align:left;
+  }
+  .availability-list{
+    display:flex; flex-wrap:wrap; justify-content:flex-start; gap:8px; width:100%;
+  }
   .copy-btn{ padding:8px 12px; }
   .export-actions{ flex-direction:column; align-items:stretch; gap:10px; margin-top:18px; }
   .export-actions .btn{ width:100%; }
 
-  /* ---- Utility widgets ---- */
-  .back-to-top{ right:14px; bottom:14px; width:44px; height:44px; }
+  .back-to-top{
+    right:14px; bottom:14px; width:50px; height:50px;
+    padding:0; display:flex; align-items:center; justify-content:center;
+  }
+  .back-to-top span{
+    font-size:9px; letter-spacing:0.2px; line-height:1;
+  }
 
-  /* Minimum comfortable touch target everywhere */
   .btn, .social-btn, .copy-btn, .theme-toggle, .side-nav a{ min-height:44px; }
 }
 
-/* --------------------------------------------------------------------
-   3. Phones (≤640px)
-   -------------------------------------------------------------------- */
 @media (max-width: 640px){
   .mobile-topbar{ padding:12px 14px; }
   .stage{ padding:70px 14px 36px; gap:16px; }
@@ -208,9 +185,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .fader-track{ height:110px !important; }
 }
 
-/* --------------------------------------------------------------------
-   4. Small phones (≤380px)
-   -------------------------------------------------------------------- */
 @media (max-width: 380px){
   .mobile-logo{ font-size:18px; }
   h1.name{ font-size:clamp(30px, 14vw, 40px); }
@@ -220,9 +194,6 @@ body.nav-open .mobile-nav-toggle span:nth-child(3){ transform:translateY(-7px) r
   .card{ flex-basis:90vw; padding:16px; }
 }
 
-/* --------------------------------------------------------------------
-   5. Respect reduced motion + landscape phones
-   -------------------------------------------------------------------- */
 @media (max-width: 900px) and (orientation: landscape){
   .sidebar{ width:min(320px, 60vw); }
   .stage{ padding-top:64px; }
